@@ -1,9 +1,12 @@
-import { BadRequestException, Body, Controller, Get, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, UsePipes } from '@nestjs/common';
+import { ZodValidationPipe, createZodDto } from 'nestjs-zod';
 import { createCheckers } from 'ts-interface-checker';
 import { AppService } from './app.service';
 import { EventDTO } from './types';
 import exportedTypeSuite from './types-ti';
+import { eventDTOSchema } from './types.zod';
 
+class EventZodDTO extends createZodDto(eventDTOSchema.strict()) {}
 
 @Controller()
 export class AppController {
@@ -15,7 +18,7 @@ export class AppController {
   }
 
   @Post('/tsInterChecker')
-  async createEvent(@Body() eventDTO: EventDTO) {
+  async createEvent1(@Body() eventDTO: EventDTO) {
     const { EventDTO } = createCheckers(exportedTypeSuite);
 
     /*
@@ -43,6 +46,22 @@ export class AppController {
       throw new BadRequestException(errors);
     }
 
+    console.log('Validation passed', eventDTO);
+  }
+
+  @Post('/zod')
+  @UsePipes(ZodValidationPipe)
+  async createEvent2(@Body() eventDTO: EventZodDTO) {
+    /*
+      ZodValidationPipe auto validates the DTO and throws a list of errors about what's wrong
+      strict validation can be achived by adding script to the zod schema object
+
+      normal:
+      class EventZodDTO extends createZodDto(eventDTOSchema) {}
+
+      strict:
+      class EventZodDTO extends createZodDto(eventDTOSchema.strict()) {}
+    */
     console.log('Validation passed', eventDTO);
   }
 }
