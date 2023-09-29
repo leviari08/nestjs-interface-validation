@@ -18,8 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "type-gen": "ts-interface-builder src/types.ts",
-    "zod-types": "ts-to-zod src/types.ts src/types.zod.ts --skipValidation"
+    "type-gen": "ts-interface-builder src/types.ts src/types2.ts",
+    "zod-types": "ts-to-zod --all --skipValidation"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
