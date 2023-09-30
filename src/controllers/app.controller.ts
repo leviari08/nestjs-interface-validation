@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { AerialEvent } from 'src/types/types';
 import { AppService } from '../app.service';
 
 
@@ -10,4 +11,7 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Post('')
+  async createEvent(@Body() eventDTO: AerialEvent) {}
 }

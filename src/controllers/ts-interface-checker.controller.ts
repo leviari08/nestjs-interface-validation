@@ -1,15 +1,15 @@
 import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
-import { EventDTO } from 'src/types/types';
+import { AerialEvent } from 'src/types/types';
 import exportedTypeSuite from 'src/types/types-ti';
 import { createCheckers } from 'ts-interface-checker';
 
 @Controller('ts-interface-checker')
 export class TsInterfaceCheckerController {
   @Post('')
-  @ApiBody({ schema: { type: "Event" } })
-  async createEvent(@Body() eventDTO: EventDTO) {
-    const { EventDTO } = createCheckers(exportedTypeSuite);
+  @ApiBody({ schema: { type: "AerialEvent" } })
+  async createEvent(@Body() eventDTO: AerialEvent) {
+    const { AerialEvent } = createCheckers(exportedTypeSuite);
 
     /*
       Methods to validate with ts-interface-checker
@@ -22,17 +22,17 @@ export class TsInterfaceCheckerController {
     */
 
     try {
-      EventDTO.check(eventDTO);
+      AerialEvent.check(eventDTO);
     } catch (error) {
       throw new BadRequestException();
     }
 
-    const isValid = EventDTO.test(eventDTO);
+    const isValid = AerialEvent.test(eventDTO);
     if (!isValid) {
       throw new BadRequestException();
     }
 
-    const errors = EventDTO.validate(eventDTO);
+    const errors = AerialEvent.validate(eventDTO);
     if (errors) {
       throw new BadRequestException(errors);
     }

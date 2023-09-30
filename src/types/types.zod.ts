@@ -7,8 +7,22 @@ export const timeWindowSchema = z.object({
   endTime: z.string(),
 });
 
-export const eventDTOSchema = z.object({
+export const crewMemberSchema = z.object({
   id: z.string(),
-  color: z.string().optional(),
+  name: z.string(),
+  unitId: z.string(),
+});
+
+export const baseEventSchema = z.object({
+  id: z.string(),
   timeWindow: timeWindowSchema,
+});
+
+export const aerialEventSchema = baseEventSchema.extend({
+  color: z.string().optional(),
+  crewMembers: z.array(crewMemberSchema),
+});
+
+export const groundEventSchema = baseEventSchema.extend({
+  color: z.string().optional(),
 });

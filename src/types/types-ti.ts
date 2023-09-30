@@ -4,10 +4,18 @@
 import * as t from "ts-interface-checker";
 // tslint:disable:object-literal-key-quotes
 
-export const EventDTO = t.iface([], {
+export const BaseEvent = t.iface([], {
   "id": "string",
-  "color": t.opt("string"),
   "timeWindow": "TimeWindow",
+});
+
+export const AerialEvent = t.iface(["BaseEvent"], {
+  "color": t.opt("string"),
+  "crewMembers": t.array("CrewMember"),
+});
+
+export const GroundEvent = t.iface(["BaseEvent"], {
+  "color": t.opt("string"),
 });
 
 export const TimeWindow = t.iface([], {
@@ -16,8 +24,17 @@ export const TimeWindow = t.iface([], {
   "endTime": "string",
 });
 
+export const CrewMember = t.iface([], {
+  "id": "string",
+  "name": "string",
+  "unitId": "string",
+});
+
 const exportedTypeSuite: t.ITypeSuite = {
-  EventDTO,
+  BaseEvent,
+  AerialEvent,
+  GroundEvent,
   TimeWindow,
+  CrewMember,
 };
 export default exportedTypeSuite;
