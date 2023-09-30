@@ -26,7 +26,12 @@ Validation with [ts-interface-checker](#main-libraries), type generation with [t
 ##### 2. zod
 Validation with [zod](#main-libraries) and [nestjs-zod](#main-libraries), type generation with [ts-to-zod](#main-libraries)
 
+### Swagger integration
+While nestjs-zod have `patchNestJsSwagger` plugin which auto creates types based on the zod schema, ts-interface-checker controller use the plain interfaces so it can't generate swagger types automaticlly, and you have to create the types yourself using `@nestjs/swagger` decorators
 
+* [NestJS swagger cli plugin](https://docs.nestjs.com/openapi/cli-plugin) does support auto generating swagger schema based on the code, but it only works on classes, since unlike classes, interfaces don't exist at runtime
+
+<hr>
 ## Installation
 
 ```bash

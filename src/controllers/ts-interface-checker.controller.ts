@@ -1,4 +1,5 @@
 import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { EventDTO } from 'src/types/types';
 import exportedTypeSuite from 'src/types/types-ti';
 import { createCheckers } from 'ts-interface-checker';
@@ -6,6 +7,7 @@ import { createCheckers } from 'ts-interface-checker';
 @Controller('ts-interface-checker')
 export class TsInterfaceCheckerController {
   @Post('')
+  @ApiBody({ schema: { type: "Event" } })
   async createEvent(@Body() eventDTO: EventDTO) {
     const { EventDTO } = createCheckers(exportedTypeSuite);
 
